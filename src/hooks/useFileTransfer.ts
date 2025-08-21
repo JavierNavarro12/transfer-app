@@ -5,6 +5,7 @@ import { encryptFile, decryptFile } from '@/lib/encryption';
 import { uploadEncryptedFile, downloadEncryptedFile } from '@/lib/storage';
 import { saveTransferSession, getTransferSession, markAsDownloaded } from '@/lib/firestore';
 import { initializeAuth } from '@/lib/firebase';
+import type { UploadMetadata } from 'firebase/storage';
 
 export const useFileTransfer = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -44,7 +45,7 @@ export const useFileTransfer = () => {
       const expirationDate = new Date();
       expirationDate.setHours(expirationDate.getHours() + config.expirationHours);
 
-      const metadata = {
+      const metadata: UploadMetadata = {
         customMetadata: {
           ownerId: currentUser.uid,
           expirationDate: expirationDate.toISOString()

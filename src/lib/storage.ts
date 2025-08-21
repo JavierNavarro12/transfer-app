@@ -1,11 +1,11 @@
 import { storage } from './firebase';
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, deleteObject, type UploadMetadata } from 'firebase/storage';
 
 export const uploadEncryptedFile = async (
   sessionId: string,
   encryptedFile: ArrayBuffer,
   fileName: string,
-  metadata?: any
+  metadata?: UploadMetadata
 ): Promise<string> => {
   try {
     const storageRef = ref(storage, `transfers/${sessionId}/${fileName}.encrypted`);
