@@ -59,10 +59,14 @@ const MainApp: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
       {/* Header */}
-      <div className="max-w-4xl mx-auto mb-8">
+      <div className="max-w-5xl mx-auto mb-12">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">TransferApp</h1>
-          <p className="text-gray-600">Transfer files securely and quickly</p>
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+            TransferApp
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Transfer files securely and quickly with end-to-end encryption and QR codes
+          </p>
         </div>
       </div>
 
@@ -80,40 +84,44 @@ const MainApp: React.FC = () => {
       )}
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {mode === 'home' && (
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-12">
             {/* Send File Card */}
-            <div className="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow">
-              <div className="bg-blue-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
-                <Upload className="w-10 h-10 text-blue-600" />
+            <div className="group bg-white rounded-3xl shadow-2xl p-10 text-center hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl w-24 h-24 flex items-center justify-center mx-auto mb-8 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <Upload className="w-12 h-12 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Send File</h2>
-              <p className="text-gray-600 mb-6">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6 group-hover:text-blue-600 transition-colors">
+                Send File
+              </h2>
+              <p className="text-gray-600 mb-8 text-lg leading-relaxed max-w-sm mx-auto">
                 Upload a file and get a unique code and QR code to share with others.
-                Your files are encrypted before upload for maximum security.
+                Your files are encrypted before upload for max security.
               </p>
               <button
                 onClick={() => setMode('upload')}
-                className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus-visible"
+                className="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-2xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 font-semibold text-lg"
               >
                 Upload File
               </button>
             </div>
 
             {/* Receive File Card */}
-            <div className="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow">
-              <div className="bg-green-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
-                <Download className="w-10 h-10 text-green-600" />
+            <div className="group bg-white rounded-3xl shadow-2xl p-10 text-center hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+              <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl w-24 h-24 flex items-center justify-center mx-auto mb-8 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <Download className="w-12 h-12 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Receive File</h2>
-              <p className="text-gray-600 mb-6">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6 group-hover:text-green-600 transition-colors">
+                Receive File
+              </h2>
+              <p className="text-gray-600 mb-8 text-lg leading-relaxed max-w-sm mx-auto">
                 Enter a 6-digit code or scan a QR code to download a shared file.
-                Files are automatically decrypted on your device.
+                Files are automatically decrypted on your device for secure access.
               </p>
               <button
                 onClick={() => setMode('receive')}
-                className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors focus-visible"
+                className="w-full py-4 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-2xl hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 font-semibold text-lg"
               >
                 Download File
               </button>
@@ -158,7 +166,7 @@ const MainApp: React.FC = () => {
                 <span className="text-2xl">🔒</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">End-to-End Encryption</h3>
-              <p className="text-gray-600">Files are encrypted on your device before upload and decrypted only on the recipient&apos;s device.</p>
+              <p className="text-gray-600 text-lg leading-relaxed">Files are encrypted on your device before upload and decrypted only on the recipient&apos;s device.</p>
             </div>
 
             <div className="text-center">
@@ -166,7 +174,7 @@ const MainApp: React.FC = () => {
                 <span className="text-2xl">⚡</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Lightning Fast</h3>
-              <p className="text-gray-600">Optimized for speed with direct downloads and minimal latency.</p>
+              <p className="text-gray-600 text-lg leading-relaxed">Optimized for speed with direct downloads and minimal latency.</p>
             </div>
 
             <div className="text-center">
@@ -174,7 +182,7 @@ const MainApp: React.FC = () => {
                 <span className="text-2xl">📱</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">PWA Support</h3>
-              <p className="text-gray-600">Install as an app on your phone or desktop for the best experience.</p>
+              <p className="text-gray-600 text-lg leading-relaxed">Install as an app on your phone or desktop for the best experience.</p>
             </div>
           </div>
         </div>

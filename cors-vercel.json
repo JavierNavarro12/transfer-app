@@ -1,0 +1,14 @@
+[
+  {
+    "origin": ["https://transfer-app-tan.vercel.app"],
+    "method": ["GET", "HEAD", "OPTIONS"],
+    "responseHeader": ["Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers"],
+    "maxAgeSeconds": 3600
+  },
+  {
+    "origin": ["*"],
+    "method": ["GET"],
+    "responseHeader": ["Content-Type"],
+    "maxAgeSeconds": 3600
+  }
+]

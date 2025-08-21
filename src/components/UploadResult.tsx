@@ -88,15 +88,18 @@ const UploadResult: React.FC<UploadResultProps> = ({
         </div>
 
         {/* Session Code */}
-        <div className="bg-white rounded-lg p-4 border">
-          <h3 className="text-lg font-semibold mb-2">Session Code</h3>
-          <div className="flex items-center space-x-2">
-            <code className="text-3xl font-mono bg-gray-100 px-4 py-2 rounded border flex-1 text-center tracking-widest">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200 shadow-sm">
+          <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center">
+            <span className="mr-2">🔐</span>
+            Session Code
+          </h3>
+          <div className="flex items-center space-x-3">
+            <code className="text-2xl font-mono bg-gradient-to-r from-slate-900 to-slate-800 text-white px-4 py-2 rounded-lg border-2 border-slate-700 flex-1 text-center tracking-[0.25em] shadow-md font-bold">
               {sessionId}
             </code>
             <button
               onClick={() => copyToClipboard(sessionId, 'code')}
-              className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+              className="p-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
               title="Copy code"
             >
               <Copy className="w-5 h-5" />
@@ -105,53 +108,61 @@ const UploadResult: React.FC<UploadResultProps> = ({
         </div>
 
         {/* QR Code */}
-        <div className="bg-white rounded-lg p-4 border">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold">QR Code</h3>
+        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-200 shadow-sm">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-gray-800 flex items-center">
+              <span className="mr-2">📱</span>
+              QR Code
+            </h3>
             <div className="flex space-x-2">
               <button
                 onClick={downloadQRCode}
-                className="p-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+                className="p-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                 title="Download QR code"
               >
-                <Download className="w-4 h-4" />
+                <Download className="w-5 h-5" />
               </button>
               <button
                 onClick={shareLink}
-                className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                className="p-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                 title="Share link"
               >
-                <Share2 className="w-4 h-4" />
+                <Share2 className="w-5 h-5" />
               </button>
             </div>
           </div>
           <div className="flex justify-center" id="qr-code">
-            <QRCodeSVG
-              value={shareableLink}
-              size={256}
-              level="H"
-              includeMargin={true}
-              className="border border-gray-200 rounded"
-            />
+            <div className="bg-white p-4 rounded-2xl shadow-lg border-2 border-gray-100">
+              <QRCodeSVG
+                value={shareableLink}
+                size={240}
+                level="H"
+                includeMargin={true}
+                className="rounded-lg"
+              />
+            </div>
           </div>
         </div>
 
         {/* Shareable Link */}
-        <div className="bg-white rounded-lg p-4 border">
-          <h3 className="text-lg font-semibold mb-2">Shareable Link</h3>
-          <div className="flex items-center space-x-2">
+        <div className="bg-gradient-to-r from-green-50 to-teal-50 rounded-xl p-6 border border-green-200 shadow-sm">
+          <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+            <span className="mr-2">🔗</span>
+            Shareable Link
+          </h3>
+          <div className="flex items-center space-x-3">
             <input
               type="text"
               value={shareableLink}
               readOnly
-              className="flex-1 p-3 bg-gray-100 border rounded text-sm font-mono"
+              className="flex-1 p-4 bg-gray-50 border-2 border-green-300 rounded-xl text-base font-mono text-gray-900 shadow-inner focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
             />
             <button
               onClick={() => copyToClipboard(shareableLink, 'link')}
-              className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+              className="p-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
               title="Copy link"
             >
-              <Copy className="w-5 h-5" />
+              <Copy className="w-6 h-6" />
             </button>
           </div>
         </div>
