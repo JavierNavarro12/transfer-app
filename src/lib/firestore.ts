@@ -72,7 +72,7 @@ export const cleanupExpiredSessions = async (): Promise<void> => {
   // For now, we'll implement client-side cleanup when accessing expired sessions
   try {
     // Note: In production, use Firebase Functions for server-side cleanup
-    console.log('Cleanup function should be implemented in Firebase Functions');
+
   } catch (error) {
     console.error('Error during cleanup:', error);
   }

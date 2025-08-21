@@ -99,7 +99,6 @@ export async function compressFile(file: File): Promise<CompressionResult> {
       data: compressed.buffer
     }
   } catch (error) {
-    console.error('Error compressing file:', error)
     return {
       compressed: false,
       originalSize: file.size,
@@ -120,7 +119,6 @@ export function decompressFile(compressedData: ArrayBuffer): ArrayBuffer {
     const decompressed = pako.ungzip(uint8Array)
     return decompressed.buffer
   } catch (error) {
-    console.error('Error decompressing file:', error)
     throw new Error('Failed to decompress file')
   }
 }

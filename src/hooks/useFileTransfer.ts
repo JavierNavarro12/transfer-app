@@ -165,7 +165,6 @@ export const useFileTransfer = () => {
             type: session.fileType || 'application/octet-stream'
           });
         } catch (error) {
-          console.error('Error decompressing file:', error);
           // Fallback to original blob if decompression fails
           finalBlob = decryptedBlob;
         }
@@ -201,7 +200,6 @@ export const useFileTransfer = () => {
     try {
       return await getTransferSession(sessionId);
     } catch (error) {
-      console.error('Error checking session:', error);
       return null;
     }
   };

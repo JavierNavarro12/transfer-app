@@ -8,7 +8,6 @@ export const generateQRCodeDataURL = async (text: string): Promise<string> => {
     const dataUrl = `data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><rect width="${size}" height="${size}" fill="white"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="black">${text}</text></svg>`).toString('base64')}`;
     return dataUrl;
   } catch (error) {
-    console.error('Error generating QR code:', error);
     throw new Error('Failed to generate QR code');
   }
 };
