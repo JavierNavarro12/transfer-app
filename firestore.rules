@@ -8,9 +8,11 @@ service cloud.firestore {
       // Cualquiera puede leer (los códigos de sesión son la protección)
       allow read: if true;
 
-      // Solo el creador puede actualizar (si está autenticado)
+      // Permitir actualizar campo "downloaded" sin autenticación (operación benigna)
       allow update: if request.auth != null &&
-                         request.auth.uid == resource.data.ownerId;
+                         request.auth.uid == resource.data.ownerId ||
+                         (request.writeFields.hasOnly(['downloaded', 'downloadCount']) &&
+                          request.resource.data.downloaded == false);
 
       // Solo el creador puede eliminar
       allow delete: if request.auth != null &&
