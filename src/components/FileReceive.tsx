@@ -88,14 +88,14 @@ const FileReceive: React.FC<FileReceiveProps> = ({ onDownloadSuccess, onDownload
             <h2 className="text-2xl font-bold text-gray-800 mb-2">
               Download File
             </h2>
-            <p className="text-gray-600">
+            <p className="text-gray-700 text-lg leading-relaxed">
               Enter the 6-digit code or scan the QR code to download your file
             </p>
           </div>
 
           <form onSubmit={handleCodeSubmit} className="space-y-4">
             <div>
-              <label htmlFor="sessionCode" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="sessionCode" className="block text-sm font-semibold text-gray-800 mb-3">
                 Session Code
               </label>
               <div className="flex space-x-2">
@@ -105,7 +105,7 @@ const FileReceive: React.FC<FileReceiveProps> = ({ onDownloadSuccess, onDownload
                   value={sessionCode}
                   onChange={(e) => setSessionCode(e.target.value.toUpperCase())}
                   placeholder="Enter 6-digit code"
-                  className="flex-1 p-4 text-2xl font-mono text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase tracking-widest"
+                  className="flex-1 p-4 text-2xl font-mono text-center border-2 border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 uppercase tracking-widest text-black placeholder-gray-500 bg-white"
                   maxLength={6}
                   pattern="[A-Z0-9]{6}"
                   required
@@ -127,8 +127,8 @@ const FileReceive: React.FC<FileReceiveProps> = ({ onDownloadSuccess, onDownload
 
             {showQRScanner && (
               <div className="bg-gray-50 border rounded-lg p-4 text-center">
-                <p className="text-sm text-gray-600 mb-2">QR Scanner would be implemented here</p>
-                <p className="text-xs text-gray-500">
+                <p className="text-sm text-gray-700 mb-2 font-medium">QR Scanner Demo</p>
+                <p className="text-xs text-gray-600">
                   In a production app, you&apos;d integrate a QR scanner library like @zxing/browser
                 </p>
                 <button

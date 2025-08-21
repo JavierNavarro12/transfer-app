@@ -4,13 +4,14 @@ import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage
 export const uploadEncryptedFile = async (
   sessionId: string,
   encryptedFile: ArrayBuffer,
-  fileName: string
+  fileName: string,
+  metadata?: any
 ): Promise<string> => {
   try {
     const storageRef = ref(storage, `transfers/${sessionId}/${fileName}.encrypted`);
 
-    // Upload the encrypted file
-    await uploadBytes(storageRef, encryptedFile);
+    // Upload the encrypted file with metadata
+    await uploadBytes(storageRef, encryptedFile, metadata);
 
     // Get download URL
     const downloadURL = await getDownloadURL(storageRef);

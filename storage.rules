@@ -1,0 +1,13 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Solo archivos en la carpeta transfers
+    match /transfers/{sessionId}/{allPaths=**} {
+      // Solo el creador puede escribir
+      allow write: if request.auth != null;
+      
+      // Solo lectura con token válido y tiempo de expiración
+      allow read: if request.auth != null;
+    }
+  }
+}

@@ -4,6 +4,7 @@ import { generateSessionId, generateEncryptionKey, config } from '@/lib/config';
 import { encryptFile, decryptFile } from '@/lib/encryption';
 import { uploadEncryptedFile, downloadEncryptedFile } from '@/lib/storage';
 import { saveTransferSession, getTransferSession, markAsDownloaded } from '@/lib/firestore';
+import { initializeAuth } from '@/lib/firebase';
 
 export const useFileTransfer = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -25,6 +26,9 @@ export const useFileTransfer = () => {
     setUploadProgress(0);
 
     try {
+      // Initialize authentication
+      const currentUser = await initializeAuth();
+
       // Generate session ID and encryption key
       const sessionId = generateSessionId();
       const encryptionKey = generateEncryptionKey();
@@ -36,15 +40,22 @@ export const useFileTransfer = () => {
 
       setUploadProgress(60);
 
-      // Upload encrypted file to Firebase Storage
-      const downloadURL = await uploadEncryptedFile(sessionId, encryptedFile, file.name);
+      // Upload encrypted file to Firebase Storage with metadata
+      const expirationDate = new Date();
+      expirationDate.setHours(expirationDate.getHours() + config.expirationHours);
+
+      const metadata = {
+        customMetadata: {
+          ownerId: currentUser.uid,
+          expirationDate: expirationDate.toISOString()
+        }
+      };
+
+      const downloadURL = await uploadEncryptedFile(sessionId, encryptedFile, file.name, metadata);
 
       setUploadProgress(80);
 
       // Create transfer session
-      const expirationDate = new Date();
-      expirationDate.setHours(expirationDate.getHours() + config.expirationHours);
-
       const session: TransferSession = {
         id: sessionId,
         fileName: file.name,
@@ -56,6 +67,7 @@ export const useFileTransfer = () => {
         expirationDate,
         downloaded: false,
         downloadCount: 0,
+        ownerId: currentUser.uid, // Add owner ID
       };
 
       // Save session to Firestore

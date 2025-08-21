@@ -9,6 +9,7 @@ export interface TransferSession {
   expirationDate: Date;
   downloaded: boolean;
   downloadCount: number;
+  ownerId: string; // Firebase Auth UID
 }
 
 export interface FileUploadResult {

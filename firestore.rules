@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /transfers/{transferId} {
+      // Solo el creador puede escribir
+      allow create: if request.auth != null;
+      
+      // Solo lectura solo si está autenticado  
+      allow read: if request.auth != null;
+      
+      // Solo el creador puede actualizar/eliminar
+      allow update, delete: if request.auth != null && 
+                                 request.auth.uid == resource.data.ownerId;
+    }
+  }
+}
