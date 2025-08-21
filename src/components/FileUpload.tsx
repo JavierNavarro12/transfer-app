@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useCallback, useRef } from 'react';
-import { Upload, File, X, CheckCircle } from 'lucide-react';
+import { Upload, File, X } from 'lucide-react';
 import { useFileTransfer } from '@/hooks/useFileTransfer';
 import { config, formatFileSize } from '@/lib/config';
 
@@ -27,6 +27,14 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess, onUploadError 
     setIsDragOver(false);
   }, []);
 
+  const handleFileSelect = useCallback((file: File) => {
+    if (file.size > config.maxFileSize) {
+      onUploadError(`File size exceeds maximum limit of ${formatFileSize(config.maxFileSize)}`);
+      return;
+    }
+    setSelectedFile(file);
+  }, [onUploadError]);
+
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
@@ -35,15 +43,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess, onUploadError 
     if (files.length > 0) {
       handleFileSelect(files[0]);
     }
-  }, []);
-
-  const handleFileSelect = useCallback((file: File) => {
-    if (file.size > config.maxFileSize) {
-      onUploadError(`File size exceeds maximum limit of ${formatFileSize(config.maxFileSize)}`);
-      return;
-    }
-    setSelectedFile(file);
-  }, [onUploadError]);
+  }, [handleFileSelect]);
 
   const handleFileInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;

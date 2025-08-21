@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useRef, useCallback } from 'react';
-import { QrCode, Download, File, AlertCircle, CheckCircle } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { QrCode, Download, File, CheckCircle } from 'lucide-react';
 import { useFileTransfer } from '@/hooks/useFileTransfer';
 
 interface FileReceiveProps {
@@ -13,7 +13,7 @@ const FileReceive: React.FC<FileReceiveProps> = ({ onDownloadSuccess, onDownload
   const [sessionCode, setSessionCode] = useState('');
   const [showQRScanner, setShowQRScanner] = useState(false);
   const [downloadedFile, setDownloadedFile] = useState<{ name: string; blob: Blob } | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+
 
   const { downloadFile, isDownloading, downloadProgress, checkSession } = useFileTransfer();
 
@@ -129,7 +129,7 @@ const FileReceive: React.FC<FileReceiveProps> = ({ onDownloadSuccess, onDownload
               <div className="bg-gray-50 border rounded-lg p-4 text-center">
                 <p className="text-sm text-gray-600 mb-2">QR Scanner would be implemented here</p>
                 <p className="text-xs text-gray-500">
-                  In a production app, you'd integrate a QR scanner library like @zxing/browser
+                  In a production app, you&apos;d integrate a QR scanner library like @zxing/browser
                 </p>
                 <button
                   type="button"

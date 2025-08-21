@@ -8,14 +8,12 @@ import { config } from '@/lib/config';
 
 interface UploadResultProps {
   sessionId: string;
-  encryptionKey: string;
   fileName: string;
   onReset: () => void;
 }
 
 const UploadResult: React.FC<UploadResultProps> = ({
   sessionId,
-  encryptionKey,
   fileName,
   onReset,
 }) => {
@@ -164,7 +162,7 @@ const UploadResult: React.FC<UploadResultProps> = ({
           <ul className="text-sm text-yellow-700 space-y-1">
             <li>• Files expire after {config.expirationHours} hours</li>
             <li>• Files are automatically deleted after download</li>
-            <li>• Keep this code safe - it's required for downloading</li>
+            <li>• Keep this code safe - it&apos;s required for downloading</li>
           </ul>
         </div>
 

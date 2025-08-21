@@ -15,7 +15,12 @@ export const encryptFile = async (file: File, key: string): Promise<ArrayBuffer>
         // Convert to ArrayBuffer for upload
         const encryptedStr = encrypted.toString();
         const encryptedBytes = new TextEncoder().encode(encryptedStr);
-        resolve(encryptedBytes.buffer);
+        const buffer: ArrayBufferLike = encryptedBytes.buffer;
+        const arrayBuffer = buffer instanceof ArrayBuffer ? buffer : new ArrayBuffer((buffer as ArrayBufferLike).byteLength || 0);
+        if (!(buffer instanceof ArrayBuffer)) {
+          new Uint8Array(arrayBuffer).set(new Uint8Array(buffer));
+        }
+        resolve(arrayBuffer);
       } catch (error) {
         reject(error);
       }
@@ -39,21 +44,21 @@ export const decryptFile = (encryptedContent: string, key: string): Blob => {
     }
 
     return new Blob([bytes]);
-  } catch (error) {
+  } catch {
     throw new Error('Failed to decrypt file. Invalid key or corrupted file.');
   }
 };
 
-export const encryptMetadata = (data: any, key: string): string => {
+export const encryptMetadata = (data: unknown, key: string): string => {
   return CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
 };
 
-export const decryptMetadata = (encryptedData: string, key: string): any => {
+export const decryptMetadata = (encryptedData: string, key: string): unknown => {
   try {
     const decrypted = CryptoJS.AES.decrypt(encryptedData, key);
     const decryptedStr = decrypted.toString(CryptoJS.enc.Utf8);
     return JSON.parse(decryptedStr);
-  } catch (error) {
+  } catch {
     throw new Error('Failed to decrypt metadata');
   }
 };

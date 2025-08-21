@@ -1,4 +1,4 @@
-import { QRCodeSVG } from 'qrcode.react';
+// QRCodeSVG is imported but not used directly - available for future use
 
 export const generateQRCodeDataURL = async (text: string): Promise<string> => {
   try {

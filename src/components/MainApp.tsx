@@ -138,7 +138,6 @@ const MainApp: React.FC = () => {
         {mode === 'upload-success' && uploadResult && (
           <UploadResult
             sessionId={uploadResult.sessionId}
-            encryptionKey={uploadResult.encryptionKey}
             fileName={uploadResult.fileName}
             onReset={resetToHome}
           />
@@ -159,7 +158,7 @@ const MainApp: React.FC = () => {
                 <span className="text-2xl">🔒</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">End-to-End Encryption</h3>
-              <p className="text-gray-600">Files are encrypted on your device before upload and decrypted only on the recipient's device.</p>
+              <p className="text-gray-600">Files are encrypted on your device before upload and decrypted only on the recipient&apos;s device.</p>
             </div>
 
             <div className="text-center">

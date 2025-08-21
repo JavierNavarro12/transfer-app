@@ -1,7 +1,6 @@
 import { db } from './firebase';
 import { doc, setDoc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { TransferSession } from '@/types';
-import { config } from './config';
 
 export const saveTransferSession = async (session: TransferSession): Promise<void> => {
   try {
