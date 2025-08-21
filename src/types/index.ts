@@ -10,6 +10,12 @@ export interface TransferSession {
   downloaded: boolean;
   downloadCount: number;
   ownerId: string; // Firebase Auth UID
+  // Compression fields
+  wasCompressed?: boolean;
+  compressionRatio?: number;
+  compressionAlgorithm?: string;
+  originalFileName?: string;
+  originalFileSize?: number;
 }
 
 export interface FileUploadResult {

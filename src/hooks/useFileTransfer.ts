@@ -5,6 +5,7 @@ import { encryptFile, decryptFile } from '@/lib/encryption';
 import { uploadEncryptedFile, downloadEncryptedFile } from '@/lib/storage';
 import { saveTransferSession, getTransferSession, markAsDownloaded } from '@/lib/firestore';
 import { initializeAuth } from '@/lib/firebase';
+import { smartCompressFile, decompressFile, type CompressionResult } from '@/lib/compression';
 import type { UploadMetadata } from 'firebase/storage';
 
 export const useFileTransfer = () => {
@@ -34,10 +35,22 @@ export const useFileTransfer = () => {
       const sessionId = generateSessionId();
       const encryptionKey = generateEncryptionKey();
 
-      setUploadProgress(20);
+      setUploadProgress(10);
 
-      // Encrypt the file
-      const encryptedFile = await encryptFile(file, encryptionKey);
+      // Compress file intelligently
+      const { file: processedFile, compressionResult } = await smartCompressFile(file);
+
+      setUploadProgress(30);
+
+      // Ensure we have a File object for encryption
+      const fileToEncrypt = processedFile instanceof File ? processedFile :
+        new File([processedFile], file.name, {
+          type: file.type,
+          lastModified: file.lastModified
+        });
+
+      // Encrypt the file (compressed or original)
+      const encryptedFile = await encryptFile(fileToEncrypt, encryptionKey);
 
       setUploadProgress(60);
 
@@ -48,7 +61,12 @@ export const useFileTransfer = () => {
       const metadata: UploadMetadata = {
         customMetadata: {
           ownerId: currentUser.uid,
-          expirationDate: expirationDate.toISOString()
+          expirationDate: expirationDate.toISOString(),
+          originalFileName: file.name,
+          originalFileSize: file.size.toString(),
+          wasCompressed: compressionResult.compressed.toString(),
+          compressionRatio: compressionResult.compressionRatio.toString(),
+          compressionAlgorithm: compressionResult.algorithm
         }
       };
 
@@ -69,6 +87,12 @@ export const useFileTransfer = () => {
         downloaded: false,
         downloadCount: 0,
         ownerId: currentUser.uid, // Add owner ID
+        // Add compression info
+        wasCompressed: compressionResult.compressed,
+        compressionRatio: compressionResult.compressionRatio,
+        compressionAlgorithm: compressionResult.algorithm,
+        originalFileName: file.name,
+        originalFileSize: file.size,
       };
 
       // Save session to Firestore
@@ -128,6 +152,24 @@ export const useFileTransfer = () => {
 
       // Decrypt file
       const decryptedBlob = decryptFile(encryptedContent, session.encryptionKey);
+
+      setDownloadProgress(85);
+
+      // Decompress if needed
+      let finalBlob = decryptedBlob;
+      if (session.wasCompressed) {
+        try {
+          const arrayBuffer = await decryptedBlob.arrayBuffer();
+          const decompressedBuffer = decompressFile(arrayBuffer);
+          finalBlob = new Blob([decompressedBuffer], {
+            type: session.fileType || 'application/octet-stream'
+          });
+        } catch (error) {
+          console.error('Error decompressing file:', error);
+          // Fallback to original blob if decompression fails
+          finalBlob = decryptedBlob;
+        }
+      }
 
       setDownloadProgress(90);
 
